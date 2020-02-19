@@ -1,0 +1,11 @@
+version: '3'
+services:
+  etl:
+    image: python:3.7-buster
+    container_name: etl
+    build: .
+    volumes:
+    - ./app:/app
+    - ./data:/data
+    ports:
+    - 5000:5000
