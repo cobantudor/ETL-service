@@ -9,4 +9,7 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
+# Register crontab jobs
+RUN flask crontab add
+
 CMD ["python","app.py"]
