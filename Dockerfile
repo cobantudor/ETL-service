@@ -12,4 +12,7 @@ RUN pip install -r requirements.txt
 # Register crontab jobs
 RUN flask crontab add
 
+# Start cron service
+RUN service cron start
+
 CMD ["python","app.py"]
