@@ -1,3 +1,4 @@
 class Loader:
-    def load(self):
+    def load(self, data):
+        # Store data to postgres
         pass
