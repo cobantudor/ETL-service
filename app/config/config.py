@@ -1,0 +1,10 @@
+class Config:
+    DATA_FILES_PATH = '/data/'
+    MONGODB_HOST = 'localhost'
+    MONGODB_PORT = '27017'
+    MONGODB_DB = 'admin'
+    POSTGRES_HOST = 'localhost'
+    POSTGRES_PORT = '5432'
+    POSTGRES_USER = 'root'
+    POSTGRES_PASSWORD = 'root'
+    POSTGRES_DATABASE = 'postgress'
