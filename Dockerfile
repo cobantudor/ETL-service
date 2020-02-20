@@ -3,7 +3,7 @@ FROM python:3.7-buster
 # Install OS dependencies
 RUN apt update -y && apt upgrade -y && apt install -y cron nano
 
-COPY app /app
+COPY . /app
 
 WORKDIR /app
 

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_crontab import Crontab
-from worker import OrdersWorker
+from worker.orders_worker import OrdersWorker
 
 
 app = Flask(__name__)
