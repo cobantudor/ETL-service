@@ -5,6 +5,9 @@ services:
     container_name: etl
     restart: always
     build: .
+    links:
+      - mongo
+      - postgres
     volumes:
       - ./app:/app
       - ./data:/data
