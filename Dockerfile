@@ -9,7 +9,4 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-# Register crontab jobs
-RUN flask crontab add
-
 ENTRYPOINT [".docker/docker-entrypoint.sh"]

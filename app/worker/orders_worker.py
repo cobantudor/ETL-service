@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from config.config import Config
-from extractor.extractor import Extractor
-from transformer.transformer import Transformer
-from loader.loader import Loader
+from app.config.config import Config
+from app.extractor import Extractor
+from app.transformer import Transformer
+from app.loader import Loader
 
 
 class OrdersWorker:

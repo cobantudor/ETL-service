@@ -1,5 +1,5 @@
 class Config:
-    LOGS_FILE = 'logs/workers.txt'
+    LOGS_FILE = 'app/logs/workers.txt'
     DATA_FILES_PATH = '/data/'
     MONGODB_HOST = 'mongo'
     MONGODB_PORT = 27017

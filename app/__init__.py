@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_crontab import Crontab
-from worker.orders_worker import OrdersWorker
+from app.worker.orders_worker import OrdersWorker
 
 
 app = Flask(__name__)
@@ -16,7 +16,3 @@ def etl():
 def process_data():
     worker = OrdersWorker()
     worker.process()
-
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
