@@ -1,6 +1,10 @@
 class Config:
     LOGS_FILE = 'app/logs/workers.txt'
-    DATA_FILES_PATH = '/data/'
+    DATA_FILES_PATH = 'data/'
+    DATA_FILES = {
+        'orders': 'orders_202002181303.csv',
+        'users': 'users_202002181303.csv'
+    }
     MONGODB_HOST = 'mongo'
     MONGODB_PORT = 27017
     MONGODB_DB = 'admin'

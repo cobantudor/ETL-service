@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-from app.config.config import Config
+from app.config import Config
 
 
 class Extractor:

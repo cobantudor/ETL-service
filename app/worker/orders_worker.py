@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.config.config import Config
+from app.config import Config
 from app.extractor import Extractor
 from app.transformer import Transformer
 from app.loader import Loader
