@@ -67,3 +67,43 @@ class Extractor:
             self.LAST_EXECUTION_TIME_FIELD: current_execution_timestamp
         }
         self.write_collection_registry(collection_registry_path, collection_registry)
+
+    def extract_aggregated_data(self, orders_collection_name, users_collection_name):
+        current_execution_timestamp = datetime.now().__str__()
+
+        collection_registry_path = self.get_collection_registry_path('aggregated')
+
+        if self.exists_collection_registry_file(collection_registry_path):
+            collection_registry = self.read_collection_registry(collection_registry_path)
+            last_execution_timestamp = collection_registry.get(self.LAST_EXECUTION_TIME_FIELD)
+
+            documents_filter = {
+                '$and': [
+                    {'updated_at': ['$gt', last_execution_timestamp]},
+                    {'updated_at': ['$lte', current_execution_timestamp]}
+                ]
+            }
+        else:
+            documents_filter = {'updated_at': ['$lte', current_execution_timestamp]}
+
+        # Too slow, 7 minutes on local machine
+        # 2020-02-26 11:57:02.710865
+        # 2020-02-26 12:04:18.774367
+        result_cursor = self.db[orders_collection_name].aggregate([
+            {'$match': {'$expr': documents_filter}},
+            {'$lookup': {
+                'from': users_collection_name,
+                'let': {'order_user_id': "$user_id"},
+                'pipeline': [
+                    {'$match': {'$expr': {'$eq': ['$user_id', '$$order_user_id']}}},
+                    {'$project': {'updated_at': 0, 'created_at': 0}}
+                ],
+                'as': 'user_orders'
+            }},
+            {'$replaceRoot': {'newRoot': {'$mergeObjects': [{'$arrayElemAt': ['$user_orders', 0]}, "$$ROOT"]}}},
+            {'$project': {'user_orders': 0, '_id': 0}},
+        ])
+
+        self.update_last_execution_timestamp(collection_registry_path, current_execution_timestamp)
+
+        return result_cursor
