@@ -4,7 +4,37 @@ from app.config import Config
 
 
 def create_sample_user_orders_table():
+    sql_command = """
+        create table user_orders
+        (
+            id                  serial not null,
+            created_at          timestamp,
+            date_tz             timestamp,
+            item_count          integer,
+            order_id            varchar,
+            receive_method      varchar,
+            status              varchar,
+            store_id            varchar,
+            subtotal            float,
+            tax_percentage      float,
+            total               float,
+            total_discount      float,
+            total_gratuity      float,
+            total_tax           float,
+            updated_at          timestamp,
+            user_id             bigint,
+            fulfillment_date_tz timestamp,
+            user_first_name     varchar,
+            user_last_name      varchar,
+            user_merchant_id    varchar,
+            user_phone_number   bigint,
+            user_created_at     timestamp,
+            user_updated_at     timestamp,
+            primary key (id)
+        )
+    """
     connection = None
+
     try:
         connection = psycopg2.connect(
             user=Config.POSTGRES_USER,
@@ -15,36 +45,6 @@ def create_sample_user_orders_table():
         )
 
         cursor = connection.cursor()
-        sql_command = """
-            create table user_orders
-            (
-                id                  serial not null,
-                created_at          timestamp,
-                date_tz             timestamp,
-                item_count          integer,
-                order_id            varchar,
-                receive_method      varchar,
-                status              varchar,
-                store_id            varchar,
-                subtotal            float,
-                tax_percentage      float,
-                total               float,
-                total_discount      float,
-                total_gratuity      float,
-                total_tax           float,
-                updated_at          timestamp,
-                user_id             bigint,
-                fulfillment_date_tz timestamp,
-                user_first_name     varchar,
-                user_last_name      varchar,
-                user_merchant_id    varchar,
-                user_phone_number   bigint,
-                user_created_at     timestamp,
-                user_updated_at     timestamp,
-                primary key (id)
-            )
-            """
-
         cursor.execute(sql_command)
         cursor.close()
         connection.commit()
