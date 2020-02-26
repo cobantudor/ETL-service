@@ -42,7 +42,7 @@ class Extractor:
             documents_filter = {'updated_at': {'$lte': current_execution_timestamp}}
 
         search_filter = {**valid_data_filter, **documents_filter}
-        result_cursor = collection.find(search_filter)
+        result_cursor = collection.find(search_filter, {'_id': 0})
 
         self.update_last_execution_timestamp(collection_registry_path, current_execution_timestamp)
 
