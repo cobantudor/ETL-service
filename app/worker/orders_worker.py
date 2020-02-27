@@ -1,23 +1,28 @@
-from datetime import datetime
-
-from app.config import Config
 from app.extractor import Extractor
-from app.transformer import Transformer
 from app.loader import Loader
+from app.transformer import Transformer
+from app.logger import Logger
 
 
 class OrdersWorker:
     def __init__(self):
-        pass
+        self.extractor = Extractor()
+        self.transformer = Transformer()
+        self.loader = Loader()
+        self.logger = Logger('Orders worker')
 
     def process(self):
-        extractor = Extractor()
-        transformer = Transformer()
-        loader = Loader()
-        with open(Config.LOGS_FILE, 'a') as file:
-            file.write(f"Orders worker started at: {datetime.now()} \n")
-            orders = extractor.extract_orders('orders')
-            users = extractor.extract_users('users')
-            data = transformer.merge_users_and_orders(users, orders)
-            loader.load(data)
-            file.write(f"Orders worker finished at: {datetime.now()} \n")
+        self.logger.info('Started')
+
+        orders = self.extractor.extract_orders('orders')
+        self.logger.info(f'Extracted orders: {orders.count()}')
+
+        users = self.extractor.extract_users('users')
+        self.logger.info(f'Extracted users: {users.count()}')
+
+        data = self.transformer.merge_users_and_orders(users, orders)
+
+        self.loader.load(data)
+        self.logger.info(f'Written records: {len(data)}')
+
+        self.logger.info('Finished')
