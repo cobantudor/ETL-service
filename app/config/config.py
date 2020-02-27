@@ -1,5 +1,5 @@
 class Config:
-    LOGS_FILE = 'app/logs/workers.txt'
+    LOGS_FILE = 'app/logs/workers.json'
     DATA_FILES_PATH = 'data/'
     DATA_FILES = {
         'orders': 'orders_202002181303.csv',
