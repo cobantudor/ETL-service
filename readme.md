@@ -45,3 +45,23 @@ All application logging is written in `logs` directory:
 
 - `workers.json` stores workers execution logs
 - `error.log` flask application error file
+
+## Worker execution
+
+Worker is executed at every application launch.
+
+Crontab record for `orders workes` is set on every 5 minutes.
+
+### Run cron job manually
+
+- Get cronjob id
+
+```shell script
+flask crontab show
+```
+
+- Run cronjob
+
+```shell script
+flask crontab run <id>
+```
