@@ -4,14 +4,25 @@ from pymongo import MongoClient
 from datetime import datetime
 
 from app.config import Config
+from app.logger import Logger
 
 
 class Extractor:
     LAST_EXECUTION_TIME_FIELD = 'last_execution_time'
+    client = None
+    db = None
 
-    def __init__(self):
-        self.client = MongoClient(Config.MONGODB_HOST, Config.MONGODB_PORT)
-        self.db = self.client[Config.MONGODB_DB]
+    def __init__(self, worker_name):
+        self.logger = Logger(worker_name)
+        self.connect()
+
+    def connect(self):
+        try:
+            self.client = MongoClient(Config.MONGODB_HOST, Config.MONGODB_PORT)
+            self.db = self.client[Config.MONGODB_DB]
+        except Exception as error:
+            self.logger.error('MongoDB connection error')
+            raise error
 
     def extract_users(self, collection_name):
         valid_users_data_filter = {'user_id': {'$ne': 'null'}}

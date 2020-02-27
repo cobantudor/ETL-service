@@ -6,10 +6,11 @@ from app.logger import Logger
 
 class OrdersWorker:
     def __init__(self):
-        self.extractor = Extractor()
-        self.transformer = Transformer()
-        self.loader = Loader()
-        self.logger = Logger('Orders worker')
+        self.name='orders_worker'
+        self.extractor = Extractor(self.name)
+        self.transformer = Transformer(self.name)
+        self.loader = Loader(self.name)
+        self.logger = Logger(self.name)
 
     def process(self):
         self.logger.info('Started')
