@@ -18,8 +18,6 @@ class OrdersWorker:
         self.logger.info(f'Extracted orders: {orders.count()}')
 
         users = self.extractor.extract_users('users')
-        self.logger.info(f'Extracted users: {users.count()}')
-
         data = self.transformer.merge_users_and_orders(users, orders)
 
         self.loader.load(data)

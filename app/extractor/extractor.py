@@ -16,14 +16,13 @@ class Extractor:
     def extract_users(self, collection_name):
         valid_users_data_filter = {'user_id': {'$ne': 'null'}}
 
-        return self.process_data_collection(collection_name, valid_users_data_filter)
+        collection = self.db[collection_name]
+        result_cursor = collection.find(valid_users_data_filter, {'_id': 0})
+
+        return result_cursor
 
     def extract_orders(self, collection_name):
         valid_orders_data_filter = {'user_id': {'$ne': 'null'}}
-
-        return self.process_data_collection(collection_name, valid_orders_data_filter)
-
-    def process_data_collection(self, collection_name, valid_data_filter):
         current_execution_timestamp = datetime.now().__str__()
 
         collection = self.db[collection_name]
@@ -41,7 +40,7 @@ class Extractor:
         else:
             documents_filter = {'updated_at': {'$lte': current_execution_timestamp}}
 
-        search_filter = {**valid_data_filter, **documents_filter}
+        search_filter = {**valid_orders_data_filter, **documents_filter}
         result_cursor = collection.find(search_filter, {'_id': 0})
 
         self.update_last_execution_timestamp(collection_registry_path, current_execution_timestamp)
