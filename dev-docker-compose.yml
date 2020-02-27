@@ -1,0 +1,34 @@
+version: '3'
+services:
+  etl:
+    image: etl
+    container_name: etl
+    restart: always
+    build: .
+    links:
+      - mongo
+      - postgres
+    volumes:
+      - registry-volume:/app/registry
+    ports:
+      - 5000:5000
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5432:5432
+
+volumes:
+  registry-volume:
