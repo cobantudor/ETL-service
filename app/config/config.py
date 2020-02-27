@@ -1,10 +1,5 @@
 class Config:
     LOGS_FILE = 'logs/workers.json'
-    DATA_FILES_PATH = 'data/'
-    DATA_FILES = {
-        'orders': 'orders_202002181303.csv',
-        'users': 'users_202002181303.csv'
-    }
     REGISTRY_FILES_FOLDER = 'registry'
     MONGODB_HOST = 'mongo'
     MONGODB_PORT = 27017

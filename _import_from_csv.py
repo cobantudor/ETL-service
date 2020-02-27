@@ -6,12 +6,18 @@ from app.config import Config
 
 
 def migrate_data_from_csv():
+    data_files_path = 'data/'
+    data_files = {
+        'orders': 'orders_202002181303.csv',
+        'users': 'users_202002181303.csv'
+    }
+
     client = MongoClient(Config.MONGODB_HOST, Config.MONGODB_PORT)
     db = client[Config.MONGODB_DB]
 
-    for file in Config.DATA_FILES:
+    for file in data_files:
         collection = db[file]
-        data = pd.read_csv(Config.DATA_FILES_PATH + Config.DATA_FILES[file])
+        data = pd.read_csv(data_files_path + data_files[file])
         payload = json.loads(data.to_json(orient='records'))
         collection.delete_many({})
         collection.insert_many(payload)
